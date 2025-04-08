@@ -1,13 +1,13 @@
 const hre = require("hardhat");
 
 async function main() {
-  const contractAddress = "0xbDb0270A04Dc10d404046dA91cc6d471744E7F26"; // "0xYourDeployedContractAddress" 
+  const contractAddress = "0x1F856ab34F5A8b46563050b7cfa8fFfba070bFFA"; // "0xYourDeployedContractAddress" 
   const IdentityNFT = await hre.ethers.getContractFactory("IdentityNFT");
   const identityNFT = await IdentityNFT.attach(contractAddress);
 
-  const userAddress = "0x1089FC7842fFf4d87e490819e0A6A10Bbaa76595"; //"0xTestUserAddress"
+  const userAddress = "0x80D9980F4A19De0876Dc3Cf90A261Fd0d3D06A69"; //"0xTestUserAddress"
   const role = "student";
-  const uri = "ipfs://QmP7CuUKXhoYZZyigJsPSx2iswFYyWXBirQwLRzCmTHJoD"; //"ipfs://QmYourHashHere"
+  const uri = "ipfs://QmZp19VbXBfKT6jaX91fGDH9EdxyjdXqHnsKwyDDsv87Sc"; //"ipfs://QmYourHashHere"
 
   await identityNFT.mintIdentity(userAddress, role, uri);
   console.log("Minted NFT for", userAddress);

@@ -1,12 +1,12 @@
 {
-    "name": "John Doe 2",
-    "description": "Identity NFT for John Doe 2",
+    "name": "Atharva Tijare",
+    "description": "Identity NFT for Atharva Tijare",
     "image": "ipfs://bafybeiehhh5322h2khbjjp2huqlyejduotpzcixpnrzv2juo5s7gltzbge",
     "attributes": [
-      { "trait_type": "Roll Number", "value": "54321" },
+      { "trait_type": "Roll Number", "value": "CS22BT007" },
       { "trait_type": "Role", "value": "student" },
       { "trait_type": "Branch", "value": "ME" },
-      { "trait_type": "Programme", "value": "MTech" },
+      { "trait_type": "Programme", "value": "BTech" },
       { "trait_type": "Date of Birth", "value": "2004-01-01" }
     ]
   }
