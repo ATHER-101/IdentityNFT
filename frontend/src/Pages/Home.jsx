@@ -6,9 +6,8 @@ import { Link } from "react-router-dom";
 const identityNFTAddress = "0x1F856ab34F5A8b46563050b7cfa8fFfba070bFFA";
 const IdentityNFTABI = IdentityNFTArtifact.abi;
 
-function Home() {
+function Home({nftData, setNftData}) {
   const [account, setAccount] = useState(null);
-  const [nftData, setNftData] = useState(null);
   const [message, setMessage] = useState("");
 
   const fetchIPFSMetadata = async (uri) => {
@@ -52,7 +51,7 @@ function Home() {
 
   return (
     <div className="max-w-xl">
-      <h1 className="text-3xl font-bold mb-4 text-center">Welcome to Fee DApp</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center">Welcome to Blockchain Project</h1>
       <button
         onClick={connectWallet}
         className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mb-4"
@@ -84,22 +83,28 @@ function Home() {
           Fee Payment
         </div>
       </Link>
-
-      <Link to={"/add-course"}>
-        <div className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-4 text-center">
-          Add Course
-        </div>
-      </Link>
       
-      <Link to={"/edit-course"}>
+      <Link to={"/register-course"}>
         <div className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-4 text-center">
-          Edit Course
+          Register Course
         </div>
       </Link>
       
       <Link to={"/course-dashboard"}>
         <div className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-4 text-center">
           Course Dashboard
+        </div>
+      </Link>
+      
+      <Link to={"/amenities-access"}>
+        <div className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-4 text-center">
+          Amenities Access
+        </div>
+      </Link>
+      
+      <Link to={"/marketplace"}>
+        <div className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-4 text-center">
+          Marketplace
         </div>
       </Link>
     </div>

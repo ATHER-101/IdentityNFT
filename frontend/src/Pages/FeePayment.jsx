@@ -8,7 +8,7 @@ const FeePaymentNFTABI = FeePaymentNFTArtifact.abi;
 const PINATA_API_KEY = "5456470e28a86bec2f53";
 const PINATA_SECRET_KEY = "12f1dc08af32705a2af594d2d15723452cdc57e4a765a8664eb6e563f33c3819";
 
-function FeePayment() {
+function FeePayment({nftData}) {
   const [account, setAccount] = useState(null);
   const [semester, setSemester] = useState("");
   const [fees, setFees] = useState({
@@ -70,7 +70,7 @@ function FeePayment() {
 
     try {
       const metadata = {
-        name: "Fee Payment",
+        name: nftData.name,
         description: `Fee Payment for ${semester}`,
         image: "ipfs://bafybeiehhh5322h2khbjjp2huqlyejduotpzcixpnrzv2juo5s7gltzbge",
         attributes: Object.entries(fees).map(([key, value]) => ({

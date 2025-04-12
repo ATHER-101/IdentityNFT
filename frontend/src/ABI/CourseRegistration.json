@@ -11,6 +11,11 @@
           "internalType": "address",
           "name": "_feePaymentNFTContract",
           "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_rewardNFTAddress",
+          "type": "address"
         }
       ],
       "stateMutability": "nonpayable",
@@ -548,6 +553,19 @@
       "name": "renounceOwnership",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "rewardNFT",
+      "outputs": [
+        {
+          "internalType": "contract IRewardNFT",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {

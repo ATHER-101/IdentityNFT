@@ -1,12 +1,12 @@
 {
-    "name": "Atharva Tijare",
-    "description": "Fee Payment for Autumn 2025 Semester",
-    "image": "ipfs://bafybeiehhh5322h2khbjjp2huqlyejduotpzcixpnrzv2juo5s7gltzbge",
-    "attributes": [
-      { "trait_type": "Tuition Fee", "value": "100000" },
-      { "trait_type": "Hostel", "value": "2000" },
-      { "trait_type": "Mess", "value": "0" },
-      { "trait_type": "Gymkhana", "value": "4000" },
-      { "trait_type": "Library", "value": "0" }
-    ]
-  }
+  "name": "Atharva Tijare",
+  "description": "Fee Payment for Autumn 2025 Semester",
+  "image": "ipfs://bafybeiehhh5322h2khbjjp2huqlyejduotpzcixpnrzv2juo5s7gltzbge",
+  "attributes": [
+    { "trait_type": "Tuition Fee", "value": "100000" },
+    { "trait_type": "Hostel", "value": "2000" },
+    { "trait_type": "Mess", "value": "0" },
+    { "trait_type": "Gymkhana", "value": "4000" },
+    { "trait_type": "Library", "value": "0" }
+  ]
+}

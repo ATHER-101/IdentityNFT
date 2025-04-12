@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import CourseRegistrationArtifact from "../ABI/CourseRegistration.json";
 
-const courseRegistrationAddress = "0x325b2c5754b84769C2b5bb7966CeA24d24089e2F"; // Replace with actual deployed address
+const courseRegistrationAddress = "0x616fDf716b04A002F6B2A84DcC043DD17adE7bB6"; // Replace with actual deployed address
 const CourseRegistrationABI = CourseRegistrationArtifact.abi;
 
-function EditCourse() {
+function EditCourse({nftData}) {
   const [account, setAccount] = useState(null);
   const [courseId, setCourseId] = useState("");
   const [courseName, setCourseName] = useState("");

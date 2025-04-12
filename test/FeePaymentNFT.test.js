@@ -17,9 +17,9 @@ describe("FeePaymentNFT", function () {
     // Mint an IdentityNFT to the student
     await identityNFT.mintIdentity(student.address, "student", "ipfs://QmTest");
 
-    // Deploy FeePaymentNFT (corrected contract name)
+    // Deploy FeePaymentNFT
     const FeePaymentNFTFactory = await ethers.getContractFactory("FeePaymentNFT");
-    feePaymentNFT = await FeePaymentNFTFactory.deploy(treasury.address, identityNFT.getAddress());
+    feePaymentNFT = await FeePaymentNFTFactory.deploy(treasury.address, await identityNFT.getAddress());
     await feePaymentNFT.waitForDeployment();
   });
 
@@ -33,6 +33,9 @@ describe("FeePaymentNFT", function () {
     const metadataURI = "ipfs://QmFeeTest";
     const feeAmount = ethers.parseEther("0.1");
 
+    // Capture treasury balance before payment
+    const initialBalance = await ethers.provider.getBalance(treasury.address);
+
     // Pay fee
     await expect(
       feePaymentNFT.connect(student).payFee(semester, metadataURI, { value: feeAmount })
@@ -45,11 +48,9 @@ describe("FeePaymentNFT", function () {
     expect(await feePaymentNFT.tokenURI(1)).to.equal(metadataURI);
     expect(await feePaymentNFT.activeFeeNFT(student.address)).to.equal(1);
 
-    // Check treasury balance (using BigInt arithmetic)
-    const initialBalance = ethers.parseEther("10000"); // Hardhat default balance
-    const expectedBalance = initialBalance + feeAmount; // BigInt addition
-    const treasuryBalance = await ethers.provider.getBalance(treasury.address);
-    expect(treasuryBalance).to.equal(expectedBalance);
+    // Check treasury balance increase
+    const finalBalance = await ethers.provider.getBalance(treasury.address);
+    expect(finalBalance).to.equal(initialBalance + feeAmount);
   });
 
   it("should burn old FeeNFT and mint new one on second payment", async function () {
@@ -64,7 +65,7 @@ describe("FeePaymentNFT", function () {
     expect(await feePaymentNFT.activeFeeNFT(student.address)).to.equal(2);
 
     // Old token should be burned, expect revert when querying ownerOf
-    await expect(feePaymentNFT.ownerOf(1)).to.be.reverted; // More general check
+    await expect(feePaymentNFT.ownerOf(1)).to.be.reverted;
     expect(await feePaymentNFT.ownerOf(2)).to.equal(student.address);
   });
 
