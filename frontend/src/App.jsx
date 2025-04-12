@@ -9,6 +9,7 @@ import CourseDashboard from "./Pages/CourseDashboard";
 import RegisterCourse from "./Pages/RegisterCourse";
 import AmenitiesAccess from "./Pages/AmenitiesAccess";
 import RewardNFTMarketplace from "./Pages/RewardNFTMarketplace";
+import AdminAccessPoints from "./Pages/AdminAccessPoints";
 
 function App() {
   const [nftData, setNftData] = useState(null);
@@ -22,6 +23,7 @@ function App() {
         <Route path="/register-course" element={<RegisterCourse nftData={nftData}/>} />
         <Route path="/course-dashboard" element={<CourseDashboard nftData={nftData}/>} />
         <Route path="/amenities-access" element={<AmenitiesAccess/>} />
+        <Route path="/admin-access-points" element={<AdminAccessPoints/>} />
         <Route path="/marketplace" element={<RewardNFTMarketplace nftData={nftData}/>} />
       </Routes>
     </div>

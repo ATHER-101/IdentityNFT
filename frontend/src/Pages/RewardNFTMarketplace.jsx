@@ -2,24 +2,21 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import RewardNFTMarketplaceArtifact from "../ABI/RewardNFTMarketplace.json";
 import RewardNFTArtifact from "../ABI/RewardNFT.json";
-import IdentityNFTArtifact from "../ABI/IdentityNFT.json";
 
-const marketplaceAddress = "0xF4b3067206e9d74a886154501A47B8423b7efF27";
-const rewardNFTAddress = "0x8892d39863598A1E79FDEb33F0047358F9C50784";
-const identityNFTAddress = "0x1F856ab34F5A8b46563050b7cfa8fFfba070bFFA";
+const marketplaceAddress = "0x7AfE96e8F56c2C4a2452a662C1A278FDB8e60E6b";
+const rewardNFTAddress = "0x0106d429EE11e088a1529C51003615d443f8c45d";
 
 const marketplaceABI = RewardNFTMarketplaceArtifact.abi;
 const rewardNFTABI = RewardNFTArtifact.abi;
-const identityNFTABI = IdentityNFTArtifact.abi;
 
 export default function RewardNFTMarketplace() {
   const [account, setAccount] = useState(null);
   const [marketplace, setMarketplace] = useState(null);
   const [rewardNFT, setRewardNFT] = useState(null);
   const [nftPrice, setNftPrice] = useState("0");
-  const [ownedBalance, setOwnedBalance] = useState(0);
+  const [ownedTokenIds, setOwnedTokenIds] = useState([]); // Changed from ownedBalance to ownedTokenIds
   const [listedNFTs, setListedNFTs] = useState([]);
-  const [userListedNFTs, setUserListedNFTs] = useState([]); // New state for user's listed NFTs
+  const [userListedNFTs, setUserListedNFTs] = useState([]);
   const [tokenIdToList, setTokenIdToList] = useState("");
   const [newPrice, setNewPrice] = useState("");
   const [isOwner, setIsOwner] = useState(false);
@@ -52,7 +49,7 @@ export default function RewardNFTMarketplace() {
         setIsOwner(owner.toLowerCase() === accounts[0].toLowerCase());
         console.log("Contract owner:", owner, "Connected account:", accounts[0]);
 
-        await fetchOwnedBalance(rewardNFTContract, accounts[0]);
+        await fetchOwnedTokenIds(rewardNFTContract, accounts[0]); // Updated function
         await fetchListedNFTs(marketplaceContract, rewardNFTContract);
         await fetchUserListedNFTs(marketplaceContract, rewardNFTContract, accounts[0]);
       } catch (err) {
@@ -68,14 +65,19 @@ export default function RewardNFTMarketplace() {
     setTimeout(() => setMessage({ text: "", type: "" }), 4000);
   };
 
-  const fetchOwnedBalance = async (contractInstance, owner) => {
+  const fetchOwnedTokenIds = async (contractInstance, owner) => {
     try {
       const balance = await contractInstance.balanceOf(owner);
-      setOwnedBalance(Number(balance));
-      console.log(`Owned NFT balance for ${owner}: ${balance}`);
+      const tokenIds = [];
+      for (let i = 0; i < Number(balance); i++) {
+        const tokenId = await contractInstance.tokenOfOwnerByIndex(owner, i);
+        tokenIds.push(tokenId.toString());
+      }
+      setOwnedTokenIds(tokenIds);
+      console.log(`Owned NFT token IDs for ${owner}:`, tokenIds);
     } catch (err) {
-      console.error("Error fetching owned balance:", err);
-      showMessage("Failed to load owned NFT balance: " + err.message, "error");
+      console.error("Error fetching owned token IDs:", err);
+      showMessage("Failed to load owned NFT token IDs: " + err.message, "error");
     }
   };
 
@@ -149,7 +151,7 @@ export default function RewardNFTMarketplace() {
 
       showMessage("NFT listed successfully!");
       setTokenIdToList("");
-      await fetchOwnedBalance(rewardNFT, account);
+      await fetchOwnedTokenIds(rewardNFT, account); // Updated
       await fetchListedNFTs(marketplace, rewardNFT);
       await fetchUserListedNFTs(marketplace, rewardNFT, account);
     } catch (err) {
@@ -185,7 +187,7 @@ export default function RewardNFTMarketplace() {
 
       showMessage("NFT listed successfully!");
       setTokenIdToList("");
-      await fetchOwnedBalance(rewardNFT, account);
+      await fetchOwnedTokenIds(rewardNFT, account); // Updated
       await fetchListedNFTs(marketplace, rewardNFT);
       await fetchUserListedNFTs(marketplace, rewardNFT, account);
     } catch (approvalErr) {
@@ -201,7 +203,7 @@ export default function RewardNFTMarketplace() {
       await tx.wait();
 
       showMessage("NFT unlisted successfully!");
-      await fetchOwnedBalance(rewardNFT, account);
+      await fetchOwnedTokenIds(rewardNFT, account); // Updated
       await fetchListedNFTs(marketplace, rewardNFT);
       await fetchUserListedNFTs(marketplace, rewardNFT, account);
     } catch (err) {
@@ -217,7 +219,7 @@ export default function RewardNFTMarketplace() {
       await tx.wait();
 
       showMessage("NFT bought successfully!");
-      await fetchOwnedBalance(rewardNFT, account);
+      await fetchOwnedTokenIds(rewardNFT, account); // Updated
       await fetchListedNFTs(marketplace, rewardNFT);
       await fetchUserListedNFTs(marketplace, rewardNFT, account);
     } catch (err) {
@@ -231,7 +233,18 @@ export default function RewardNFTMarketplace() {
       <h1 className="text-3xl font-bold mb-4">Reward NFT Marketplace</h1>
       <p className="mb-4 text-sm">Connected: {account || "Not connected"}</p>
       <p className="mb-4 text-sm">NFT Price: {nftPrice} ETH</p>
-      <p className="mb-4 text-sm">Your Owned NFTs: {ownedBalance}</p>
+      <div className="mb-4 text-sm">
+        <p className="font-semibold">Your Owned NFTs:</p>
+        {ownedTokenIds.length > 0 ? (
+          <ul className="list-disc pl-5">
+            {ownedTokenIds.map((tokenId) => (
+              <li key={tokenId}>Token ID: {tokenId}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>You own no Reward NFTs.</p>
+        )}
+      </div>
 
       {isOwner && (
         <div className="border-t border-gray-700 pt-6 mb-6">
@@ -273,11 +286,10 @@ export default function RewardNFTMarketplace() {
           </button>
         </div>
         <p className="text-sm text-gray-400">
-          Note: Enter the Token ID of an NFT you own. Check your wallet or Course Dashboard for IDs.
+          Note: Enter the Token ID of an NFT you own from the list above.
         </p>
       </div>
 
-      {/* User's Listed NFTs */}
       <div className="border-t border-gray-700 pt-6 mb-6">
         <h3 className="text-xl font-bold mb-2">Your Listed NFTs</h3>
         {userListedNFTs.length > 0 ? (
@@ -309,7 +321,7 @@ export default function RewardNFTMarketplace() {
                 <p className="font-semibold">Token ID: {nft.tokenId}</p>
                 <p>Seller: {nft.seller}</p>
                 <p>Price: {nftPrice} ETH</p>
-                {nft.seller === account ? (
+                {nft.seller.toLowerCase() === account?.toLowerCase() ? (
                   <button
                     onClick={() => unlistNFT(nft.tokenId)}
                     className="text-red-400 hover:underline mt-2"

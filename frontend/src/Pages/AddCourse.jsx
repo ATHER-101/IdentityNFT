@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import CourseRegistrationArtifact from "../ABI/CourseRegistration.json";
 
-const courseRegistrationAddress = "0x616fDf716b04A002F6B2A84DcC043DD17adE7bB6"; // Replace with actual deployed address
+const courseRegistrationAddress = "0xF6D761bCE01b63f6E851a8D122ca8AA35737a761"; // Replace with actual deployed address
 const CourseRegistrationABI = CourseRegistrationArtifact.abi;
 
 function AddCourse({nftData}) {

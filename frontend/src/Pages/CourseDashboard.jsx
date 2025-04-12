@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import CourseRegistrationArtifact from "../ABI/CourseRegistration.json";
 import IdentityNFTArtifact from "../ABI/IdentityNFT.json";
 
-const contractAddress = "0x616fDf716b04A002F6B2A84DcC043DD17adE7bB6";
+const contractAddress = "0xF6D761bCE01b63f6E851a8D122ca8AA35737a761";
 const contractABI = CourseRegistrationArtifact.abi;
 
 const identityNFTAddress = "0x1F856ab34F5A8b46563050b7cfa8fFfba070bFFA";

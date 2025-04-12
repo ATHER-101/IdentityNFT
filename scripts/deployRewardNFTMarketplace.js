@@ -13,7 +13,7 @@ async function main() {
   }
 
   // Replace with your actual deployed RewardNFT and IdentityNFT addresses
-  const rewardNFTContractAddress = "0x8892d39863598A1E79FDEb33F0047358F9C50784"; // Replace with actual RewardNFT address
+  const rewardNFTContractAddress = "0x0106d429EE11e088a1529C51003615d443f8c45d"; // Replace with actual RewardNFT address
   const idNFTContractAddress = "0x1F856ab34F5A8b46563050b7cfa8fFfba070bFFA"; // Replace with actual IdentityNFT address
 
   // Deploy RewardNFTMarketplace

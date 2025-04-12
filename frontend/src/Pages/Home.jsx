@@ -102,6 +102,12 @@ function Home({nftData, setNftData}) {
         </div>
       </Link>
       
+      <Link to={"/admin-access-points"}>
+        <div className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-4 text-center">
+          Admin Access Points
+        </div>
+      </Link>
+      
       <Link to={"/marketplace"}>
         <div className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-4 text-center">
           Marketplace
